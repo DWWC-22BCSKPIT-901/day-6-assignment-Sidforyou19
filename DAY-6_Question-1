@@ -1,0 +1,52 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+};
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> result;
+        inorderHelper(root, result);
+        return result;
+    }
+
+private:
+    void inorderHelper(TreeNode* node, vector<int>& result) {
+        if (node == nullptr) {
+            return;
+        }
+        inorderHelper(node->left, result); 
+        result.push_back(node->val);  
+        inorderHelper(node->right, result); 
+    }
+};
+int main() {
+    TreeNode* root1 = new TreeNode(1, nullptr, new TreeNode(2, new TreeNode(3), nullptr));
+    Solution solution;
+    vector<int> result1 = solution.inorderTraversal(root1);
+    for (int val : result1) {
+        cout << val << " ";
+    }
+    cout << endl;
+
+    TreeNode* root2 = new TreeNode(1,
+                    new TreeNode(2, new TreeNode(4), new TreeNode(5, new TreeNode(6), new TreeNode(7))),
+                    new TreeNode(3, nullptr, new TreeNode(8, new TreeNode(9), nullptr)));
+    vector<int> result2 = solution.inorderTraversal(root2);
+    for (int val : result2) {
+        cout << val << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
